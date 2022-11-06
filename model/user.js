@@ -8,19 +8,24 @@ const userSchema = new mongoose.Schema({
     },
 
     lastName : {
-        type : String
+        type : String,
+        default : null
+
     },
 
     email :{
         type : String,
-        unique : true
+        unique : true,
+        required : [true, 'email must be entered']
     },
 
     password : {
         type : String
     },
 
-    token : String
+    token : {
+        type : String
+    }
 
 });
 

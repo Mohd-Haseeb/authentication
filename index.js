@@ -2,7 +2,8 @@ const app = require('./app')
 
 const {PORT} = process.env
 
-
+// connect with Db
+require('./config/db').connect()
 
 
 app.listen(3000, () => {
