@@ -6,6 +6,6 @@ const {PORT} = process.env
 require('./config/db').connect()
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log(`server is up and running on port ${PORT}!!!`);
 });

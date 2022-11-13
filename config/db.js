@@ -2,10 +2,10 @@
 
 const mongoose = require('mongoose')
 
-const {MONGODB_URL} = process.env;
+const {MONGO_URL} = process.env;
 
 exports.connect = () => {
-    mongoose.connect(MONGODB_URL, {
+    mongoose.connect(MONGO_URL, {
         useNewUrlParser :true,
         useUnifiedTopology : true
     })

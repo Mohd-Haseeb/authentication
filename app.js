@@ -5,6 +5,11 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
+
+// importing cookie-parser to store and retrieve user cookies for validations
+// this middleware directly injects the cokkie into the request
+const cookieParser = require('cookie-parser')
+
 // import User model
 const User = require('./model/user')
 
@@ -17,12 +22,20 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 
 
-app.get('/', (req, res, next) => {
+// custom middlewares
+const auth = require('./middleware/auth')
+
+
+// using cookieParser as middleware
+app.use(cookieParser())
+
+
+app.get('/', (req, res) => {
     res.status(200).send('<h1>HOME page</h1>')
 })
 
 
-app.post('/signup', async (req, res, next) => {
+app.post('/signup', async (req, res) => {
 
 
     try {
@@ -59,7 +72,6 @@ app.post('/signup', async (req, res, next) => {
         })
 
         // create a token
-
         const token = jwt.sign({
             id : createdUser._id,
             email
@@ -80,10 +92,10 @@ app.post('/signup', async (req, res, next) => {
         console.log("Some error in the response!!!");
     }
     
-})
+});
 
 
-app.post('/signin', async (req, res, next) => {
+app.post('/signin', async (req, res) => {
 
     try {
         
@@ -142,12 +154,22 @@ app.post('/signin', async (req, res, next) => {
 
     }
 
+});
+
+
+app.get('/dashboard', async (req, auth, res) => {
+    
+    res.send('Welcome to Dashboard!!!')
+
+});
+
+app.get('/profile', async (req, auth, res) => {
+    // access to req.user => _id
+
+    // based on _id, we can query the particular user and get its detrails => findOne(_id)
+
+    // send a response of user details
 })
-
-
-
-
-
 
 
 
